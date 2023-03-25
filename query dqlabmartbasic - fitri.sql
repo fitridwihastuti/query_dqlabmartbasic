@@ -188,4 +188,39 @@ order by qty desc;
 
 # group by pada join
 
+select mpd.kategori_produk , mpd.nama_produk , sum(tp.qty) as qty
+from ms_pelanggan_dqlab mp 
+left join tr_penjualan_dqlab tp 
+on mp.kode_pelanggan = tp.kode_pelanggan
+left join ms_produk_dqlab mpd
+on mpd.kode_produk = tp.kode_produk
+group by mpd.kategori_produk , mpd.nama_produk
+order by qty desc;
 
+# union
+
+select kode_produk, nama_produk 
+from ms_produk_dqlab 
+union 
+select kode_produk, nama_produk 
+from tr_penjualan_dqlab
+order by kode_produk; 
+
+# union all
+
+select kode_produk, nama_produk 
+from ms_produk_dqlab 
+union all
+select kode_produk, nama_produk 
+from tr_penjualan_dqlab
+order by kode_produk;
+
+# limit
+
+# menampilkan kolom produk dan jumlah produk dari tabel transaksi penjualan kemudian diurutkan dari jumlah produk yang paling banyak dan diambil 5 produk teratas
+
+select nama_produk, sum(qty) jumlah_produk
+from tr_penjualan_dqlab
+group by nama_produk
+order by jumlah_produk desc
+limit 5;
